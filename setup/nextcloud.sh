@@ -151,7 +151,6 @@ if [ ! -d /usr/local/lib/owncloud/ ] \
 
 	# Stop php-fpm if running. If theyre not running (which happens on a previously failed install), dont bail.
 	service php7.0-fpm stop &> /dev/null || /bin/true
-	service php5-fpm stop &> /dev/null || /bin/true
 
 	# Backup the existing ownCloud/Nextcloud.
 	# Create a backup directory to store the current installation and database to
@@ -368,10 +367,6 @@ tools/editconf.py /etc/php/7.0/cli/conf.d/10-opcache.ini -c ';' \
 	opcache.memory_consumption=128 \
 	opcache.save_comments=1 \
 	opcache.revalidate_freq=1
-
-# Configure the path environment for php-fpm
-tools/editconf.py /etc/php/7.0/fpm/pool.d/www.conf -c ';' \
-        env[PATH]=/usr/local/bin:/usr/bin:/bin
 
 # If apc is explicitly disabled we need to enable it
 if grep -q apc.enabled=0 /etc/php/7.0/mods-available/apcu.ini; then
