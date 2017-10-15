@@ -15,7 +15,7 @@ apt-get purge -qq -y owncloud*
 
 apt_install php7.0 php7.0-fpm \
 	php7.0-cli php7.0-sqlite php7.0-gd php7.0-imap php7.0-curl php-pear php-apcu curl \
-        php7.0-dev php7.0-gd memcached php-memcached php7.0-xml php7.0-mbstring php7.0-zip
+        php7.0-dev php7.0-gd memcached php-memcached php7.0-xml php7.0-mbstring php7.0-zip php-fpm
 
 # Migrate <= v0.10 setups that stored the ownCloud config.php in /usr/local rather than
 # in STORAGE_ROOT. Move the file to STORAGE_ROOT.
