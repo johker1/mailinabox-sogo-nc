@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 # -*- coding: utf-8 -*-
 
 # Creates an nginx configuration file so we serve HTTP/HTTPS on all
