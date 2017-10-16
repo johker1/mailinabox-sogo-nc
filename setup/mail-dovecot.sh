@@ -183,6 +183,10 @@ chmod -R o-rwx /etc/dovecot
 mkdir -p $STORAGE_ROOT/mail/mailboxes
 chown -R mail.mail $STORAGE_ROOT/mail/mailboxes
 
+#S3 mounted mailboxes
+source setup/s3.sh
+chown -R mail.mail $STORAGE_ROOT/mail/mailboxes
+
 # Same for the sieve scripts.
 mkdir -p $STORAGE_ROOT/mail/sieve
 mkdir -p $STORAGE_ROOT/mail/sieve/global_before
