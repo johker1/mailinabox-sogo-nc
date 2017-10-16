@@ -4,9 +4,6 @@ source setup/functions.sh # load our functions
 echo "Adding Spreed ME Web RTc Server Ubuntu Repo and Instalation"
 apt-add-repository ppa:strukturag/spreed-webrtc-unstable -y
 
-echo "Adding coturn REPO"
-add-apt-repository ppa:fancycode/coturn -y
-
 echo Updating system packages...
 hide_output apt-get update
 apt_get_quiet upgrade
