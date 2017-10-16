@@ -117,7 +117,7 @@ source setup/sogo.sh
 # Wait for the management daemon to start...
 until nc -z -w 4 127.0.0.1 10222
 do
-	echo Waiting for the Mail-in-a-Box management daemon to start...(If it takes too long, REBOOT AND RETRY setup/start.sh)
+	echo Waiting for the Mail-in-a-Box management daemon to start...If it takes too long, REBOOT AND RETRY setup/start.sh
 	sleep 2
 done
 
