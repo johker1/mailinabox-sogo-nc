@@ -1,4 +1,5 @@
 source /etc/mailinabox.conf # load global vars
+source setup/functions.sh # load our functions
 
 echo "Adding Spreed ME Web RTc Server Ubuntu Repo and Instalation"
 apt-add-repository ppa:strukturag/spreed-webrtc-unstable -y
