@@ -84,6 +84,7 @@ fi
 
 # Save the global options in /etc/mailinabox.conf so that standalone
 # tools know where to look for data.
+PRIMARY_DOMAIN=$(echo $PRIMARY_HOSTNAME | sed 's/^[^.]*.//g')
 cat > /etc/mailinabox.conf << EOF;
 STORAGE_USER=$STORAGE_USER
 STORAGE_ROOT=$STORAGE_ROOT
@@ -92,6 +93,7 @@ PUBLIC_IP=$PUBLIC_IP
 PUBLIC_IPV6=$PUBLIC_IPV6
 PRIVATE_IP=$PRIVATE_IP
 PRIVATE_IPV6=$PRIVATE_IPV6
+PRIMARY_DOMAIN=$PRIMARY_DOMAIN
 EOF
 
 # Start service configuration.
@@ -110,13 +112,12 @@ source setup/web.sh
 source setup/management.sh
 source setup/munin.sh
 source setup/sogo.sh
-source setup/nextcloud.sh
-source setup/spreedme.sh
+
 
 # Wait for the management daemon to start...
 until nc -z -w 4 127.0.0.1 10222
 do
-	echo Waiting for the Mail-in-a-Box management daemon to start...
+	echo Waiting for the Mail-in-a-Box management daemon to start...(If it takes too long, REBOOT AND RETRY setup/start.sh)
 	sleep 2
 done
 
@@ -124,6 +125,15 @@ done
 # services.
 tools/dns_update
 tools/web_update
+
+echo Adding collabora domain to DNS
+echo cloud.$PRIMARY_DOMAIN: $PUBLIC_IP > /home/user-data/dns/custom.yaml
+
+# ...and then have it write the DNS and nginx configuration files and start those
+# services.
+tools/dns_update
+tools/web_update
+
 
 # Give fail2ban another restart. The log files may not all have been present when
 # fail2ban was first configured, but they should exist now.
@@ -135,6 +145,11 @@ management/ssl_certificates.py -q
 
 # If there aren't any mail users yet, create one.
 source setup/firstuser.sh
+
+echo 'Installing Nextcloud'
+source setup/nextcloud.sh
+source setup/spreedme.sh
+management/ssl_certificates.py
 
 # Done.
 echo

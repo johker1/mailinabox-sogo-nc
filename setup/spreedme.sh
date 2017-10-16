@@ -13,7 +13,7 @@ apt_install spreed-webrtc
 echo "Enabling spreedme in rc.local"
 echo "service spreed-webrtc start" >> /etc/rc.local
 echo "Starting spreedme"
-service spreed-webrtc start
+service_restart spreed-webrtc
 
 echo "Adding turn Server has dependency of Spreed Me"
 apt_install coturn
