@@ -7,9 +7,7 @@ source /etc/mailinabox.conf # load global vars
 
 # ### Installing Nextcloud
 
-echo "Installing Nextcloud (contacts/calendar)..."
-
-# Keep the php5 dependancies for the owncloud upgrades
+echo "Installing Nextcloud (spreed-me/collabora)..."
 
 apt-get purge -qq -y owncloud*
 
@@ -52,6 +50,10 @@ InstallNextcloud() {
 	# The two apps we actually want are not in Nextcloud core. Download the releases from
 	# their github repositories.
 	mkdir -p /usr/local/lib/owncloud/apps
+
+	wget https://nextcloud.struktur.de/s/x81symJCy7MD6hh/download -O /tmp/spreedme.tgz
+	tar xf /tmp/spreedme.tgz -C /usr/local/lib/owncloud/apps/
+	rm /tmp/spreedme.tgz
 
 	# Fix weird permissions.
 	chmod 750 /usr/local/lib/owncloud/{apps,config}
@@ -97,7 +99,6 @@ InstallOwncloud() {
 	# Download and verify
 	wget_verify https://download.owncloud.org/community/owncloud-$version.zip $hash /tmp/owncloud.zip
 
-
 	# Extract ownCloud
 	unzip -q /tmp/owncloud.zip -d /usr/local/lib
 	rm -f /tmp/owncloud.zip
@@ -106,13 +107,9 @@ InstallOwncloud() {
 	# their github repositories.
 	mkdir -p /usr/local/lib/owncloud/apps
 
-	wget_verify https://github.com/owncloud/contacts/releases/download/v1.4.0.0/contacts.tar.gz c1c22d29699456a45db447281682e8bc3f10e3e7 /tmp/contacts.tgz
-	tar xf /tmp/contacts.tgz -C /usr/local/lib/owncloud/apps/
-	rm /tmp/contacts.tgz
-
-	wget_verify https://github.com/nextcloud/calendar/releases/download/v1.4.0/calendar.tar.gz c84f3170efca2a99ea6254de34b0af3cb0b3a821 /tmp/calendar.tgz
-	tar xf /tmp/calendar.tgz -C /usr/local/lib/owncloud/apps/
-	rm /tmp/calendar.tgz
+	wget https://nextcloud.struktur.de/s/x81symJCy7MD6hh/download -O /tmp/spreedme.tgz
+	tar xf /tmp/spreedme.tgz -C /usr/local/lib/owncloud/apps/
+	rm /tmp/spreedme.tgz
 
 	# Fix weird permissions.
 	chmod 750 /usr/local/lib/owncloud/{apps,config}
@@ -308,7 +305,7 @@ fi
 # * We need to set the timezone to the system timezone to allow fail2ban to ban
 #   users within the proper timeframe
 # * We need to set the logdateformat to something that will work correctly with fail2ban
-# * mail_domain' needs to be set every time we run the setup. Making sure we are setting 
+# * mail_domain' needs to be set every time we run the setup. Making sure we are setting
 #   the correct domain name if the domain is being change from the previous setup.
 # Use PHP to read the settings file, modify it, and write out the new settings array.
 TIMEZONE=$(cat /etc/timezone)
@@ -341,6 +338,8 @@ chown www-data.www-data $STORAGE_ROOT/owncloud/config.php
 # and calendar apps are the extensions we really care about here.
 hide_output sudo -u www-data php /usr/local/lib/owncloud/console.php app:disable firstrunwizard
 hide_output sudo -u www-data php /usr/local/lib/owncloud/console.php app:enable user_external
+hide_output sudo -u www-data php /usr/local/lib/owncloud/console.php app:enable spreedme
+#hide_output sudo -u www-data php /usr/local/lib/owncloud/console.php app:enable collabora
 
 # When upgrading, run the upgrade script again now that apps are enabled. It seems like
 # the first upgrade at the top won't work because apps may be disabled during upgrade?
