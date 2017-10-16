@@ -1,7 +1,12 @@
 source /etc/mailinabox.conf # load global vars
 source setup/functions.sh # load our functions
 if [ ! -f $HOME/.aws/config ]; then
-apt_install awscli s3ql
+
+apt_install python-pip s3ql
+
+export LC_ALL=C
+
+pip install awscli
 
 echo "AWS ID"
 read awsid
@@ -64,7 +69,7 @@ case "$1" in
 
     ;;
   stop)
-    umount.s3ql /mnt/s3fs
+    umount.s3ql /home/user-data/mail/mailboxes/
     ;;
   *)
     echo "Usage: /etc/init.d/s3ql{start|stop}"
@@ -87,6 +92,6 @@ update-rc.d -f s3ql defaults
 
 service s3ql start
 
-update-rc.d s3ql enable >> /dev/null
+update-rc.d s3ql enable
 
 fi
