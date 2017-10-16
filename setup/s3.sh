@@ -2,6 +2,7 @@ source /etc/mailinabox.conf # load global vars
 source setup/functions.sh # load our functions
 if [ ! -f $HOME/.aws/config ]; then
 apt_install awscli s3ql
+
 echo "AWS ID"
 read awsid
 echo "AWS KEY"
@@ -13,18 +14,23 @@ read bucketname
 
 mkdir $HOME/.aws/
 cat > $HOME/.aws/config <<EOF
-  [default]
-  aws_access_key_id = $awsid
-  aws_secret_access_key = $awskey
-  region = $awsregion
+[default]
+region = $awsregion
+EOF
+
+cat > $HOME/.aws/credentials <<EOF
+[default]
+aws_access_key_id = $awsid
+aws_secret_access_key = $awskey
 EOF
 
 cat > /authfile.s3ql <<EOF
-[fs3]
+[default]
 storage-url: s3://$bucketname/
 backend-login: $awsid
 backend-password: $awskey
 EOF
+
 chmod 400 /authfile.s3ql
 
 cat > /etc/init.d/s3ql << 'EOF'
@@ -68,6 +74,7 @@ esac
 
 exit 0
 EOF
+
 sed -i -e "s/BUCKETNAME/${bucketname}/g" /etc/init.d/s3ql
 
 chmod +x /etc/init.d/s3ql
@@ -77,6 +84,9 @@ echo aws s3api create-bucket --bucket $bucketname --region $awsregion --create-b
 mkfs.s3ql s3://$bucketname/ --authfile /authfile.s3ql --plain
 
 update-rc.d -f s3ql defaults
+
 service s3ql start
+
 update-rc.d s3ql enable >> /dev/null
+
 fi
