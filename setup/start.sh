@@ -111,6 +111,7 @@ source setup/management.sh
 source setup/munin.sh
 source setup/sogo.sh
 source setup/nextcloud.sh
+source setup/spreedme.sh
 
 # Wait for the management daemon to start...
 until nc -z -w 4 127.0.0.1 10222
