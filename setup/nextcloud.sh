@@ -247,8 +247,8 @@ if [ ! -f $STORAGE_ROOT/owncloud/owncloud.db ]; then
 
   'forcessl' => true, # if unset/false, Nextcloud sends a HSTS=0 header, which conflicts with nginx config
 
-  'overwritewebroot' => '/cloud',
-  'overwrite.cli.url' => '/cloud',
+  'overwritewebroot' => '/',
+  'overwrite.cli.url' => '/',
   'user_backends' => array(
     array(
       'class'=>'OC_User_IMAP',
@@ -314,10 +314,10 @@ php <<EOF > $CONFIG_TEMP && mv $CONFIG_TEMP $STORAGE_ROOT/owncloud/config.php;
 <?php
 include("$STORAGE_ROOT/owncloud/config.php");
 
-\$CONFIG['trusted_domains'] = array('$PRIMARY_HOSTNAME');
+\$CONFIG['trusted_domains'] = array('$PRIMARY_HOSTNAME','cloud.$PRIMARY_DOMAIN');
 
 \$CONFIG['memcache.local'] = '\OC\Memcache\APCu';
-\$CONFIG['overwrite.cli.url'] = '/cloud';
+\$CONFIG['overwrite.cli.url'] = '/';
 \$CONFIG['mail_from_address'] = 'administrator'; # just the local part, matches our master administrator address
 
 \$CONFIG['logtimezone'] = '$TIMEZONE';
