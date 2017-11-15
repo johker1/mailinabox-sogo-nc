@@ -126,7 +126,7 @@ done
 tools/dns_update
 tools/web_update
 
-echo Adding collabora domain to DNS
+echo Adding Nextloud domain to DNS
 echo cloud.$PRIMARY_DOMAIN: $PUBLIC_IP > /home/user-data/dns/custom.yaml
 
 # ...and then have it write the DNS and nginx configuration files and start those

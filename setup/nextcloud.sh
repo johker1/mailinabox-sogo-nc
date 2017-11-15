@@ -7,7 +7,7 @@ source /etc/mailinabox.conf # load global vars
 
 # ### Installing Nextcloud
 
-echo "Installing Nextcloud (spreed-me/collabora)..."
+echo "Installing Nextcloud (spreed-me)..."
 
 apt-get purge -qq -y owncloud*
 
