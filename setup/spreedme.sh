@@ -45,7 +45,7 @@ echo "Adding TURNSERVER and spreedme to Webrtc Conf"
 cat > /etc/spreed/webrtc.conf<<'EOF'
 ; Minimal Spreed WebRTC configuration for Nextcloud
 [http]
-listen = 127.0.0.1:8080
+listen = 127.0.0.1:8081
 basePath = /webrtc/
 root = /usr/share/spreed-webrtc-server/www
 [app]
