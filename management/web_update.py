@@ -98,12 +98,12 @@ def do_web_update(env):
         if domain == env['PRIMARY_HOSTNAME']:
             # PRIMARY_HOSTNAME is handled above.
             continue
+        if domain == "bala.com":
+                    nginx_conf += make_domain_config(domain, [template0, template4], ssl_certificates, env)
+                    continue
         if domain in web_domains_not_redirect:
             # This is a regular domain.
             if domain not in has_root_proxy_or_redirect:
-                if domain == "bala.com":
-                    nginx_conf += make_domain_config(domain, [template0, template4], ssl_certificates, env)
-                else:
                     nginx_conf += make_domain_config(domain, [template0, template1], ssl_certificates, env)
             else:
                 nginx_conf += make_domain_config(domain, [template0], ssl_certificates, env)
