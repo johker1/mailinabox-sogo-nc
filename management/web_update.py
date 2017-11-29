@@ -69,11 +69,8 @@ def get_web_domains_with_root_overrides(env):
     return root_overrides
 
 def get_web_domains_with_wordpress(env):
-    os.chdir('/home/user-data/www/')
-    documents = []
-    for file in glob.glob("*.txt"): # read all txt files in working directory
-        documents.extend( line for line in open(file) )
-    return documents
+    lines = [line.rstrip('\n') for line in open("/home/user-data/www/wordpress.txt")]
+    return lines
 
 def do_web_update(env):
     # Pre-load what SSL certificates we will use for each domain.
@@ -101,7 +98,6 @@ def do_web_update(env):
         if domain in web_domains_not_redirect:
             # This is a regular domain.
             if domain not in has_root_proxy_or_redirect:
-                
                 if domain in web_domains_with_wordpress:
                     nginx_conf += make_domain_config(domain, [template0, template1, template4], ssl_certificates, env)
                 else:
