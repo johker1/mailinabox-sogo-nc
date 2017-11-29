@@ -70,7 +70,7 @@ def get_web_domains_with_root_overrides(env):
 
 def get_web_domains_with_wordpress(env):
     lines = set()
-    nginx_conf_custom_wp = os.path.join(env["STORAGE_ROOT"], "www/worpress.txt")
+    nginx_conf_custom_wp = os.path.join(env["STORAGE_ROOT"], "www/wordpress.txt")
     with open(nginx_conf_custom_wp) as file:
         for line in file:
             lines.add(line)
