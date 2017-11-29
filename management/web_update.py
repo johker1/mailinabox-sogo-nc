@@ -69,15 +69,13 @@ def get_web_domains_with_root_overrides(env):
     return root_overrides
 
 def get_web_domains_with_wordpress(env):
-    # Load custom settings so we can tell what domains have a redirect or proxy set up on '/',
-    # which means static hosting is not happening.
-    wp_overrides = {}
-    nginx_conf_custom_wp = os.path.join(env["STORAGE_ROOT"], "www/worpress.yaml")
-    if os.path.exists(nginx_conf_custom_wp):
-        custom_settings = rtyaml.load(open(nginx_conf_custom_wp))
-        for domain in custom_settings.items():
-            wp_overrides[domain] = (type)
-    return wp_overrides
+    lines = []
+    nginx_conf_custom_wp = os.path.join(env["STORAGE_ROOT"], "www/worpress.txt")
+    with open(nginx_conf_custom_wp) as file:
+        for line in file:
+            line = line.strip()
+            lines.append(line)
+        return lines
 
 def do_web_update(env):
     # Pre-load what SSL certificates we will use for each domain.
