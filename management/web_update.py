@@ -69,12 +69,11 @@ def get_web_domains_with_root_overrides(env):
     return root_overrides
 
 def get_web_domains_with_wordpress(env):
-    lines = []
+    lines = set()
     nginx_conf_custom_wp = os.path.join(env["STORAGE_ROOT"], "www/worpress.txt")
     with open(nginx_conf_custom_wp) as file:
         for line in file:
-            line = line.strip()
-            lines.append(line)
+            lines.add(line)
     return lines
 
 def do_web_update(env):
