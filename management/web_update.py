@@ -75,7 +75,7 @@ def get_web_domains_with_wordpress(env):
         for line in file:
             line = line.strip()
             lines.append(line)
-        return lines
+    return lines
 
 def do_web_update(env):
     # Pre-load what SSL certificates we will use for each domain.
