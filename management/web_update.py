@@ -70,7 +70,8 @@ def get_web_domains_with_root_overrides(env):
 
 def get_web_domains_with_wordpress(env):
     lines = set()
-    lines = [line.rstrip('\n') for line in open("/home/user-data/www/wordpress.txt")]
+    for domain in open("/home/user-data/www/wordpress.txt"):
+        lines.add(domain)
     return lines
 
 def do_web_update(env):
@@ -91,7 +92,8 @@ def do_web_update(env):
     has_root_proxy_or_redirect = get_web_domains_with_root_overrides(env)
     web_domains_not_redirect = get_web_domains(env, include_www_redirects=False)
     web_domains_with_wordpress = get_web_domains_with_wordpress(env)
-    print (web_domains_with_wordpress)
+    web_domains_with_wordpress.add("johker.xyz")
+    
     for domain in get_web_domains(env):
         if domain == env['PRIMARY_HOSTNAME']:
             # PRIMARY_HOSTNAME is handled above.
