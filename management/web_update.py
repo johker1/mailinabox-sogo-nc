@@ -93,7 +93,7 @@ def do_web_update(env):
     web_domains_not_redirect = get_web_domains(env, include_www_redirects=False)
     web_domains_with_wordpress = get_web_domains_with_wordpress(env)
  
- 
+
     for domain in get_web_domains(env):
         if domain == env['PRIMARY_HOSTNAME']:
             # PRIMARY_HOSTNAME is handled above.
@@ -101,8 +101,8 @@ def do_web_update(env):
         if domain in web_domains_not_redirect:
             # This is a regular domain.
             if domain not in has_root_proxy_or_redirect:
-                if domain == "johker.xyz":
-                    nginx_conf += make_domain_config(domain, [template0, template1, template4], ssl_certificates, env)
+                if domain == "bala.com":
+                    nginx_conf += make_domain_config(domain, [template0, template4], ssl_certificates, env)
                 else:
                     nginx_conf += make_domain_config(domain, [template0, template1], ssl_certificates, env)
             else:
