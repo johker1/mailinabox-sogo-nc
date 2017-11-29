@@ -96,7 +96,7 @@ def do_web_update(env):
     # Add configuration all other web domains.
     has_root_proxy_or_redirect = get_web_domains_with_root_overrides(env)
     web_domains_not_redirect = get_web_domains(env, include_www_redirects=False)
-    web_domains_with_wordpress get_web_domains_with_wordpress(env)
+    web_domains_with_wordpress = get_web_domains_with_wordpress(env)
     
     for domain in get_web_domains(env):
         if domain == env['PRIMARY_HOSTNAME']:
