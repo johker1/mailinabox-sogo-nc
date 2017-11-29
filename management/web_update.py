@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 # -*- coding: utf-8 -*-
 
 # Creates an nginx configuration file so we serve HTTP/HTTPS on all
@@ -68,11 +66,6 @@ def get_web_domains_with_root_overrides(env):
                     root_overrides[domain] = (type, value)
     return root_overrides
 
-def get_web_domains_with_wordpress(env):
-    lines = set()
-    for domain in open("/home/user-data/www/wordpress.txt"):
-        lines.add(domain)
-    return lines
 
 def do_web_update(env):
     # Pre-load what SSL certificates we will use for each domain.
@@ -91,20 +84,14 @@ def do_web_update(env):
     # Add configuration all other web domains.
     has_root_proxy_or_redirect = get_web_domains_with_root_overrides(env)
     web_domains_not_redirect = get_web_domains(env, include_www_redirects=False)
-    web_domains_with_wordpress = get_web_domains_with_wordpress(env)
- 
-
     for domain in get_web_domains(env):
         if domain == env['PRIMARY_HOSTNAME']:
             # PRIMARY_HOSTNAME is handled above.
             continue
-        if domain == "bala.com":
-                    nginx_conf += make_domain_config(domain, [template0, template4], ssl_certificates, env)
-                    continue
         if domain in web_domains_not_redirect:
             # This is a regular domain.
             if domain not in has_root_proxy_or_redirect:
-                    nginx_conf += make_domain_config(domain, [template0, template1], ssl_certificates, env)
+                nginx_conf += make_domain_config(domain, [template0, template4], ssl_certificates, env)
             else:
                 nginx_conf += make_domain_config(domain, [template0], ssl_certificates, env)
         else:
