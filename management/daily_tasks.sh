@@ -11,7 +11,7 @@ export LANG=en_US.UTF-8
 export LC_TYPE=en_US.UTF-8
 
 # Backing Up nginx conf
-# cp /etc/nginx/conf.d/local.conf /root/back_nginx.conf
+cp /etc/nginx/conf.d/local.conf /root/back_nginx.conf
 
 # Take a backup.
 management/backup.py | management/email_administrator.py "Backup Status"
@@ -23,5 +23,5 @@ management/ssl_certificates.py --headless | management/email_administrator.py "E
 management/status_checks.py --show-changes | management/email_administrator.py "Status Checks Change Notice"
 
 # Restoring nginx conf
-# cp /root/back_nginx.conf /etc/nginx/conf.d/local.conf
-# nginx -s reload
+cp /root/back_nginx.conf /etc/nginx/conf.d/local.conf
+nginx -s reload
