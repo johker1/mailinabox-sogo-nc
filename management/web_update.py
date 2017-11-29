@@ -69,12 +69,11 @@ def get_web_domains_with_root_overrides(env):
     return root_overrides
 
 def get_web_domains_with_wordpress(env):
-    lines = set()
-    nginx_conf_custom_wp = os.path.join(env["STORAGE_ROOT"], "www/wordpress.txt")
-    with open(nginx_conf_custom_wp) as file:
-        for line in file:
-            lines.add(line)
-    return lines
+    os.chdir('/home/user-data/www/')
+    documents = []
+    for file in glob.glob("*.txt"): # read all txt files in working directory
+        documents.extend( line for line in open(file) )
+    return documents
 
 def do_web_update(env):
     # Pre-load what SSL certificates we will use for each domain.
