@@ -69,6 +69,7 @@ def get_web_domains_with_root_overrides(env):
     return root_overrides
 
 def get_web_domains_with_wordpress(env):
+    lines = set()
     lines = [line.rstrip('\n') for line in open("/home/user-data/www/wordpress.txt")]
     return lines
 
