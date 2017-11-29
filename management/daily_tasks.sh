@@ -1,7 +1,7 @@
 #!/bin/bash
 # -*- coding: utf-8 -*-
 # This script is run daily (at 3am each night).
-
+cd /home/ubuntu/mailinabox-sogo-nc
 # Set character encoding flags to ensure that any non-ASCII
 # characters don't cause problems. See setup/start.sh and
 # the management daemon startup script.
