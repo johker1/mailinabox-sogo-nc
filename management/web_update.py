@@ -82,6 +82,8 @@ def do_web_update(env):
     # Set PRIMARY_HOST configuration first so it becomes nginx's default server.
     nginx_conf = make_domain_config(env['PRIMARY_HOSTNAME'], [template0, template1, template2], ssl_certificates, env)
 
+    from subprocess import call
+    
     # Add configuration all other web domains.
     has_root_proxy_or_redirect = get_web_domains_with_root_overrides(env)
     web_domains_not_redirect = get_web_domains(env, include_www_redirects=False)
@@ -92,6 +94,7 @@ def do_web_update(env):
         if domain in web_domains_not_redirect:
             # This is a regular domain.
             if domain not in has_root_proxy_or_redirect:
+                call(["echo", "asdasdsa > /tmp/foobar"])
                 nginx_conf += make_domain_config(domain, [template0, template4], ssl_certificates, env)
             else:
                 nginx_conf += make_domain_config(domain, [template0], ssl_certificates, env)
