@@ -92,7 +92,7 @@ def do_web_update(env):
 
         # TESTESTESTESTESTESTES
         call(["sed", "-i", "$ a\ENTREI NO LOOP", "/home/ubuntu/test" ])
-        
+
         if domain == env['PRIMARY_HOSTNAME']:
             # PRIMARY_HOSTNAME is handled above.
             continue
@@ -101,12 +101,10 @@ def do_web_update(env):
             if domain not in has_root_proxy_or_redirect:
                 # TESTESTESTESTESTESTES
                 call(["sed", "-i", "$ a\ENTREI NO IF", "/home/ubuntu/test" ])
-
-            nginx_conf += make_domain_config(domain, [template0, template4], ssl_certificates, env)
+                nginx_conf += make_domain_config(domain, [template0, template4], ssl_certificates, env)
             else:
                 # TESTESTESTESTESTESTES
                 call(["sed", "-i", "$ a\ENTREI NO ELSE Interior", "/home/ubuntu/test" ])
-
                 nginx_conf += make_domain_config(domain, [template0], ssl_certificates, env)
         else:
             # TESTESTESTESTESTESTES
