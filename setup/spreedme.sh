@@ -10,9 +10,6 @@ apt_get_quiet upgrade
 
 apt_install spreed-webrtc
 
-echo "Enabling spreedme in rc.local"
-echo "service spreed-webrtc start" >> /etc/rc.local
-
 echo "Adding turn Server has dependency of Spreed Me"
 apt_install coturn
 
