@@ -82,18 +82,10 @@ def do_web_update(env):
     # Set PRIMARY_HOST configuration first so it becomes nginx's default server.
     nginx_conf = make_domain_config(env['PRIMARY_HOSTNAME'], [template0, template1, template2], ssl_certificates, env)
 
-    # TESTETESTESTESTESTESTES
-    import sys
-
     # Add configuration all other web domains.
     has_root_proxy_or_redirect = get_web_domains_with_root_overrides(env)
     web_domains_not_redirect = get_web_domains(env, include_www_redirects=False)
     for domain in get_web_domains(env):
-
-        # TESTESTESTESTESTESTES
-        sys.stdout = open("/home/ubuntu/test", "a")
-        print ("FORLOOP\n")
-        sys.stdout.close()
 
         if domain == env['PRIMARY_HOSTNAME']:
             # PRIMARY_HOSTNAME is handled above.
@@ -101,26 +93,11 @@ def do_web_update(env):
         if domain in web_domains_not_redirect:
             # This is a regular domain.
             if domain not in has_root_proxy_or_redirect:
-
-                # TESTESTESTESTESTESTES
-                sys.stdout = open("/home/ubuntu/test", "a")
-                print ("IF INTERIOR\n")
-                sys.stdout.close()
-                
+                # MAKING ALL NON-MAIL domains wordpress ready
                 nginx_conf += make_domain_config(domain, [template0, template4], ssl_certificates, env)
             else:
-                # TESTESTESTESTESTESTES
-                sys.stdout = open("/home/ubuntu/test", "a")
-                print ("ELSE INTERIOR\n")
-                sys.stdout.close()
-                
                 nginx_conf += make_domain_config(domain, [template0], ssl_certificates, env)
         else:
-            # TESTESTESTESTESTESTES
-            sys.stdout = open("/home/ubuntu/test", "a")
-            print ("ELSE EXTERIOR\n")
-            sys.stdout.close()
-
             # Add default 'www.' redirect.
             nginx_conf += make_domain_config(domain, [template0, template3], ssl_certificates, env)
 
