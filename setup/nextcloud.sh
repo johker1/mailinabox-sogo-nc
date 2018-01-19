@@ -395,16 +395,10 @@ restart_service php7.0-fpm
 
 cp conf/nc.conf /etc/nginx/conf.d/
 
-sed -i -e "s/PRIMARY_DOMAIN/$(echo $PRIMARY_HOSTNAME | sed 's/^[^.]*.//g')/g" /etc/nginx/conf.d/nc.conf
+sed -i -e "s/PRIMARY_DOMAIN/$(echo $PRIMARY_DOMAIN)/g" /etc/nginx/conf.d/nc.conf
 
 restart_service nginx
 
-add-apt-repository ppa:certbot/certbot -y
-
-echo Updating system packages...
-hide_output apt-get update
-apt_get_quiet upgrade
-
-apt_install python-certbot-nginx
-
-certbot --nginx --agree-tos --redirect --register-unsafely-without-email  -d cloud.$(echo $PRIMARY_HOSTNAME | sed 's/^[^.]*.//g')
+sudo certbot --authenticator standalone --installer nginx \
+  -d cloud.$PRIMARY_DOMAIN --pre-hook "systemctl stop nginx" --post-hook "systemctl start nginx" \
+  --redirect

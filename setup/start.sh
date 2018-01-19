@@ -121,11 +121,6 @@ do
 	sleep 2
 done
 
-# ...and then have it write the DNS and nginx configuration files and start those
-# services.
-tools/dns_update
-tools/web_update
-
 echo Adding Nextloud domain to DNS
 echo cloud.$PRIMARY_DOMAIN: $PUBLIC_IP > /home/user-data/dns/custom.yaml
 
@@ -139,17 +134,18 @@ tools/web_update
 # fail2ban was first configured, but they should exist now.
 restart_service fail2ban
 
-# If DNS is already working, try to provision TLS certficates from Let's Encrypt.
-# Suppress extra reasons why domains aren't getting a new certificate.
-management/ssl_certificates.py -q
-
 # If there aren't any mail users yet, create one.
 source setup/firstuser.sh
 
 echo 'Installing Nextcloud'
 source setup/nextcloud.sh
 source setup/spreedme.sh
-management/ssl_certificates.py
+source letsencrypt.sh
+
+# ...and then have it write the DNS and nginx configuration files and start those
+# services.
+tools/dns_update
+tools/web_update
 
 # Done.
 echo
