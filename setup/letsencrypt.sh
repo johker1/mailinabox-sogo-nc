@@ -1,4 +1,7 @@
 #! /bin/bash
+sudo add-apt-repository ppa:certbot/certbot -y > /dev/null
+sudo apt-get update -y > /dev/null
+sudo apt-get install certbot python-certbot-nginx  -y > /dev/null
 
 source /etc/mailinabox.conf # get global vars
 source setup/functions.sh # load our functions
