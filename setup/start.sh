@@ -140,7 +140,7 @@ source setup/firstuser.sh
 echo 'Installing Nextcloud'
 source setup/nextcloud.sh
 source setup/spreedme.sh
-source letsencrypt.sh
+source setup/letsencrypt.sh
 
 # ...and then have it write the DNS and nginx configuration files and start those
 # services.
